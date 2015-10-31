@@ -1,4 +1,5 @@
-# Written by Zhen Feng
+# Written by Zhen Feng of Tsinghua University
+# Copyright GPLv2
 # The code is written for the simulation experiment of my research papers.
 # Dataset is from CAIDA
 
@@ -13,11 +14,10 @@ The differences from the above the AlgoShortestPath.py file is that it calculate
 5. CalPathLen.py
 For a given AS, read the corresponding pickle file, calculate the average, max, and min AS hops.
 6. GenRouteTable.py
-Generate route table for a given AS.
+Generate route table for all ASes you care.
 algo=0 for shortest path, and algo=1 for no-valley path.
-7. SimRouteTable.py
-Generate route tables for all ASes you care.
-8. SimMain
+algo=2 for content-down path
+7. SimMain
 The main simulation procedure.
 Generate request number, distribution, cache size, cache ratio, and etc.
 It will output the path length and profit of the two different algorithms (shortest or no-valley) for ASes you care for.
