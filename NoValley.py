@@ -76,6 +76,9 @@ def NoValley(graph, start):
             pred[v] = u
             pqueue[v] = dist[u] + 1
             popElem(pqueue, v)
+            # Whether pop v here make little difference, only when v will be poped
+            # by another node, since it is his customer. It all makes sense
+            
     # 3. Propagate to customers
     # Firstly, we should initialize the node in pqueue again.
     # For now they are all MAX_DIST
@@ -86,8 +89,7 @@ def NoValley(graph, start):
 ##    while pred[uu] > 0:
 ##        print pred[uu]
 ##        uu = pred[uu]
-
-
+    # I wrongly delete this intialization process caused a bug.
     for u in set(graph.keys())-set(pqueue.keys()): #Initializing
         for v in [x for x in graph[u][1] if x in pqueue]:
             newdist = dist[u] + 1
@@ -95,7 +97,6 @@ def NoValley(graph, start):
                 dist[v] = newdist                
                 pqueue[v] = newdist
                 pred[v] = u
-
 
     # Finding the shortest length of customers            
     while pqueue:
@@ -110,3 +111,70 @@ def NoValley(graph, start):
                 pred[v] = u
     return dist, pred
 ##############################################################################  
+
+############################################################################################
+# For replicated contents, the hostind AS will only announce them to its customers, or peers.
+# For learned path, the received AS will only announce it to its customers.
+# This replicated content routing algorithm is different from the shortest path and no-valley path.
+# Its path is only two kinds of representation, one is from provider to customer, or customer's customers,
+# the other is from a peer to a peer, then down to its customers.
+def ContentDown(graph, start):
+    # Using priority queue to keep track of minium distance from start
+    # to a vertex.
+    pqueue = {} # vertex: distance to start
+    dist = {}   # vertex: distance to start
+    pred = {}   # vertex: previous (predecesor) vertex in shortest path
+    MAX_DIST = 100000
+    
+    # initializing dictionaries
+    for v in graph:
+        dist[v] = MAX_DIST
+        pred[v] = -1
+    dist[start] = 0
+    for v in graph:
+        pqueue[v] = dist[v] # equivalent to push into queue
+
+
+    # 1. Propagate to peers. Not only start node's peers, not its customers'peers
+    popElem(pqueue, start)     # pop the start node
+    assert(not start in pqueue)
+    for v in [x for x in graph[start][2] if x in pqueue]:
+        dist[v] = dist[start] + 1
+        pred[v] = start
+        pqueue[v] = dist[start] + 1
+        popElem(pqueue, v)
+        # Whether pop v here make little difference, only when v will be poped
+        # by another node, since it is his customer. It all makes sense
+
+    
+
+    # 2. Propagate to customers
+    # Finding the shortest length of customers
+    # Initialization
+    for u in set(graph.keys())-set(pqueue.keys()): #Initializing
+        for v in [x for x in graph[u][1] if x in pqueue]:
+            newdist = dist[u] + 1
+            if newdist < dist[v]:
+                dist[v] = newdist                
+                pqueue[v] = newdist
+                pred[v] = u
+
+                
+    while pqueue:
+        u = popmin(pqueue)
+        if u == None:  # There will be many nodes cannot reach the content, its dist and pred remain the initiate values
+            break
+        for v in graph[u][1]:
+            newdist = dist[u] + 1
+            if (newdist < dist[v]):
+                pqueue[v] = newdist
+                dist[v] = newdist
+                pred[v] = u
+
+    return dist, pred
+##############################################################################  
+
+
+
+
+
