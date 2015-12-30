@@ -16,8 +16,8 @@ The differences from the above the AlgoShortestPath.py file is that it calculate
 ### 5. CalPathLen.py
 For a given AS, read the corresponding pickle file, calculate the average, max, and min AS hops.
 
-### The above programs calculate the path length from designated ASes to all other ASes.
-### The below programs calculate the path length and profit in a scoped topology around ASes we care for.
+The above programs calculate the path length from designated ASes to all other ASes.
+The below programs calculate the path length and profit in a scoped topology around ASes we care for.
 
 ### 6. GenRouteTable.py
 Generate route table for all ASes you care.
