@@ -36,7 +36,8 @@ pickle reads error: caused by without write it correctly, such as close file unc
 content route table error: without consider that the route table might be empty (i.e., some nodes are unreachable). This situation happens in the content down path algorithm. Since I add the origin node for all path, it makes that some unreachable path is reachable one step away.
 Too simple topology: it makes the differet algorithm nearly the same performance. Later I use the real Internet dataset, and focus on several ASes.
 
-## Note: test every function before use it. Make sure it works right, especially for some particular parameters. For example, whether the first step and last step nodes is the same as we expected.
+## Note
+Test every function before use it. Make sure it works right, especially for some particular parameters. For example, whether the first step and last step nodes is the same as we expected.
 
 
 
