@@ -220,7 +220,7 @@ def CalculatePathLenProfit(asnCare, cachedInAS, requestID, algo = 0, desAS = 120
                 elif relationFlg == 0:
                     pass
                 else:
-                    print 'Neighbor relationship error, %d and %d.'%(profitNoValley[cID][rtTemp[i]], profitNoValley[cID][rtTemp[i+1]])
+                    print 'Neighbor relationship error, %d and %d.'%(profit[cID][rtTemp[i]], profit[cID][rtTemp[i+1]])
                     exit()
  
     else:
